@@ -34,7 +34,7 @@ This is an open-source project and contributions are welcome. If you have questi
 
 ## License
 
-This project is licensed under [specify type of license], allowing its use, modification, and distribution under certain conditions.
+Web Scraper © 2023 by Pelayo Trives is licensed under [![CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)].
 
 ## About the Author
 
