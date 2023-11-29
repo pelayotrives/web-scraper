@@ -7,12 +7,13 @@ This Python script scraps a website and extracts information of it.
 Install the required modules using pip with your terminal.
 
     ```
-    pip install nameofthemodule
+    pip install colorama
+    pip install requests
     ```
 
 Run the script by executing
     ```
-    python3 scrapthis.py
+    python3 script_getinfo.py
     ```
 
 Created by Pelayo Trives.
