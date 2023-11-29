@@ -12,6 +12,7 @@ Install the required modules using `pip3` with your terminal.
     pip3 install sys
     pip3 install requests
     pip3 install beautifulsoup4
+    ```
 
 Run the script by executing
     `python3 script_getinfo.py`
