@@ -9,7 +9,6 @@ It is fully commented, so follow the steps to make it work.
 Install the required modules using `pip3` with your terminal.
 
 - `pip3 install colorama`
-- `pip3 install sys`
 - `pip3 install requests`
 - `pip3 install beautifulsoup4`
 
