@@ -2,6 +2,8 @@ import requests
 import sys
 from colorama import Fore, Style
 from bs4 import BeautifulSoup
+import time
+import random
 
 # As in the URL only the name of the city changes, we are going to make it dynamic by asking the user to enter the one he/she wants and from there the request is made.
 city = input("Enter the name of the city: ")
@@ -46,6 +48,8 @@ processed_events = set()
 
 # We add the enumerate function to have an index.
 for index, block in enumerate(event_blocks, start=1):
+    # Add a random pause between 2 and 5 seconds
+    time.sleep(random.uniform(3, 6))
 
     # We request the name of the event. It is in a particular HTML tag with a unique class.
     event_name = block.find('h2', class_='Typography_body-lg__4bejd')
