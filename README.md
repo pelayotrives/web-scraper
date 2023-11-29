@@ -9,6 +9,7 @@ Install the required modules using pip with your terminal.
     ```
     pip install colorama
     pip install requests
+    pip3 install beautifulsoup4
     ```
 
 Run the script by executing
