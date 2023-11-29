@@ -7,7 +7,6 @@ It is fully commented, so follow the steps to make it work.
 ## Usage
 
 Install the required modules using pip with your terminal.
-
     ```
     pip3 install colorama
     pip3 install sys
