@@ -1,9 +1,11 @@
-import requests
-import sys
 from colorama import Fore, Style
 from bs4 import BeautifulSoup
+import requests
+import sys
 import time
 import random
+import os
+import json
 
 # As in the URL only the name of the city changes, we are going to make it dynamic by asking the user to enter the one he/she wants and from there the request is made.
 city = input("Enter the name of the city: ")
@@ -36,10 +38,6 @@ except requests.exceptions.RequestException as err:
 
 soup = BeautifulSoup(response.text, 'html.parser')
 
-##################
-# As a side note: EventBrite shows all events in Spain if the city (input) does not exist.
-##################
-
 # We look for a characteristic class, in this case one of a card that contains the visible information of each event and saves the section it is in.
 event_blocks = soup.find_all('section', class_='discover-vertical-event-card')
 
@@ -49,24 +47,20 @@ processed_events = set()
 # We add the enumerate function to have an index.
 for index, block in enumerate(event_blocks, start=1):
     # Add a random pause between 2 and 5 seconds
-    time.sleep(random.uniform(3, 6))
+    time.sleep(random.uniform(2, 5))
 
     # We request the name of the event. It is in a particular HTML tag with a unique class.
     event_name = block.find('h2', class_='Typography_body-lg__4bejd')
-    if event_name:
-        event_name = event_name.text.strip() if event_name else ''
+    event_name = event_name.text.strip() if event_name else ''
     # We request the date of the event. It is in a particular HTML tag with no-unique class, but we tag it as the only element without 2 particular classes.
     event_date = block.select_one('p:not(.eds-text-color--ui-600):not(.eds-text-color--ui-800)')
-    if event_date:
-        event_date = event_date.text.strip() if event_date else ''
+    event_date = event_date.text.strip() if event_date else ''
     # We request the location of the event. It is also in a particular HTML tag with a unique class.
     event_location = block.find('p', class_='eds-text-color--ui-600')
-    if event_location:
-        event_location = event_location.text.strip() if event_location else ''
+    event_location = event_location.text.strip() if event_location else ''
     # We request the link of the event. 
     event_link = block.find('a', class_='event-card-link')
-    if event_link:
-        event_link = event_link['href'] if event_link else ''
+    event_link = event_link['href'] if event_link else ''
 
     # This creates a tuple with the information of the event.
     event_info = (event_name, event_date, event_location, event_link)
@@ -81,3 +75,26 @@ for index, block in enumerate(event_blocks, start=1):
         print(f"Place: {event_location}")
         print(f"Link: {event_link}")
         print("--------")
+
+# Create the 'info' folder if it does not exist
+if not os.path.exists('info'):
+    os.makedirs('info')
+
+# Prepare the data for the JSON file
+data_to_export = {}
+for i, event in enumerate(processed_events):
+    data_to_export[i] = {
+        'name': event[0],
+        'date': event[1],
+        'location': event[2],
+        'link': event[3]
+    }
+
+# Name of the JSON file
+json_filename = f"events_{city.lower()}.json"
+
+# Save the data in a JSON file
+with open(os.path.join('info', json_filename), 'w', encoding='utf-8') as f:
+    json.dump(data_to_export, f, ensure_ascii=False, indent=4)
+
+print(Fore.GREEN + f"Data saved to {json_filename} in 'info' directory.")
